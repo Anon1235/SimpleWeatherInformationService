@@ -1,5 +1,6 @@
 package co.nz.westpac.interview.simpleweatherinformationservice.dao;
 
+import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.DataQueryException;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.City;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.WeatherRecord;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.MockedDatabase;
@@ -22,7 +23,7 @@ public class WeatherRecordDaoImpl implements WeatherRecordDao {
      @param java.util.List<co.nz.westpac.interview.simpleweatherinformationservice.pojo.City>  List of City which input from frontend
      @return java.util.List<co.nz.westpac.interview.simpleweatherinformationservice.pojo.WeatherRecord> Weather record per inputted cities
      */
-    public List<WeatherRecord> queryWeatherByCities(List<City> cityList){
+    public List<WeatherRecord> queryWeatherByCities(List<City> cityList) throws DataQueryException, Exception{
         List<WeatherRecord> returnList = new ArrayList<WeatherRecord>();
         for(City city:cityList){
             WeatherRecord record = MockedDatabase.getWeatherByCity(city);

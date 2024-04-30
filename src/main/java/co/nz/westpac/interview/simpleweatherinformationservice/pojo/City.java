@@ -8,7 +8,7 @@ import lombok.Setter;
 /**
 @author: matthew.yiqing.zhu
 @date:  April 30th 2024
-@description: City Name Used for input query
+@description: City Class Used for input query
 */
 public class City {
     @Setter

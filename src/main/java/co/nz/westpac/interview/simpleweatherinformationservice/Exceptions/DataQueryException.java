@@ -5,18 +5,18 @@ package co.nz.westpac.interview.simpleweatherinformationservice.Exceptions;
  @date:  April 30th 2024
  @description: Customized Exception for exception occurred in dao layer
  */
-public class DataqueryException extends Exception{
-    public DataqueryException() {super();}
+public class DataQueryException extends Exception{
+    public DataQueryException() {super();}
 
-    public DataqueryException(String message) {
+    public DataQueryException(String message) {
         super(message);
     }
 
-    public DataqueryException(String message, Throwable cause) {
+    public DataQueryException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public DataqueryException(Throwable cause) {
+    public DataQueryException(Throwable cause) {
         super(cause);
     }
 }

@@ -1,9 +1,12 @@
 package co.nz.westpac.interview.simpleweatherinformationservice.controller;
 
+import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.DataQueryException;
+import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.ServiceException;
 import co.nz.westpac.interview.simpleweatherinformationservice.constants.Constants;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.City;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.WeatherRecord;
 import co.nz.westpac.interview.simpleweatherinformationservice.service.WeatherInformationService;
+import co.nz.westpac.interview.simpleweatherinformationservice.util.MessageUtil;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.MockedDatabase;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +42,24 @@ public class WeatherInformationController {
     @RequestMapping("/queryweatherbycities")
     public ResponseEntity<Object> queryWeatherByCities(@RequestBody List<City> cityList, HttpServletResponse response) {
         if(cityList.size() > 3){
-            return new ResponseEntity<Object>(Constants.TIPS_INPUT_EXCEED, HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getInputExceedMessage(), HttpStatus.OK);
         }
         if(cityList.size() == 0){
-            return new ResponseEntity<Object>(Constants.TIPS_INPUT_NO_INPUT_CITY, HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getNoInputCityMessage(), HttpStatus.OK);
         }
-        List<WeatherRecord> weatherRecords = weatherInformationService.queryWeatherByCities(cityList);
+        List<WeatherRecord> weatherRecords = null;
+        try {
+            weatherRecords = weatherInformationService.queryWeatherByCities(cityList);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            return new ResponseEntity<Object>(MessageUtil.getServiceExcetionMessage(), HttpStatus.OK);
+        }catch (DataQueryException e) {
+            e.printStackTrace();
+            return new ResponseEntity<Object>(MessageUtil.getDaoExcetionMessage(), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Object>(MessageUtil.getUnknowExceptionMessage(), HttpStatus.OK);
+        }
         //For allow clients from other IP address can receive the result
         response.setHeader("Access-Control-Allow-Origin", "*");
         return new ResponseEntity<Object>(weatherRecords, HttpStatus.OK);
@@ -68,19 +83,10 @@ public class WeatherInformationController {
         tips.add("Welcome, currently following services are available");
         tips.add("1. /queryweatherbycities, input city list (up to 3 ) and get current weather record");
         tips.add(" Need webservice client support and The input format like following (remove single quotation marks： \"'\"):");
-        tips.add("   [  {\"cityname\": \"Auckland\"}  , {\"cityname\": \"Wellington\"}  ]   ");
+        tips.add("   [ {\"cityname\": \"Auckland\"} , {\"cityname\": \"Wellington\"}  ]   ");
         tips.add("2. /availablecities, query record of which cities are available");
         //For allow clients from other IP address can receive the result
         response.setHeader("Access-Control-Allow-Origin", "*");
         return new ResponseEntity<Object>(tips, HttpStatus.OK);
-    }
-    //mocked test for templet test only, will remove after finished
-    @RequestMapping("/test")
-    public ResponseEntity<Object>mocktest(HttpServletResponse response) {
-        List<City> cityList= new ArrayList<City>();
-        cityList.add(new City("Auckland"));
-        cityList.add(new City("Christchurch"));
-        List<WeatherRecord> weatherRecords = weatherInformationService.queryWeatherByCities(cityList);
-        return new ResponseEntity<Object>(weatherRecords, HttpStatus.OK);
     }
 }
