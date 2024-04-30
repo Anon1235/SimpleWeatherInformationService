@@ -16,4 +16,7 @@ public class Constants {
     public static String CITY_NAME_WELLINGTON = "Wellington";
     public static String CITY_NAME_HAMILTON = "Hamilton";
     public static String CITY_NAME_TAURANGA = "Tauranga";
+
+    public static String DATE_FORMAT = "dd/MM/yyyy";
+    public static String TIPS_INFORMATION_FOR_NOT_AVAILABLE_CITY = " not has record, please visit '/allowedcities' service to get available cities list";
 }

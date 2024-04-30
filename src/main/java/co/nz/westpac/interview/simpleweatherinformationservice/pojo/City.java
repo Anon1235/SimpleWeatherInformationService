@@ -1,5 +1,9 @@
 package co.nz.westpac.interview.simpleweatherinformationservice.pojo;
-        ;
+
+import lombok.Getter;
+import lombok.Setter;
+
+;
 
 /**
 @author: matthew.yiqing.zhu
@@ -7,5 +11,14 @@ package co.nz.westpac.interview.simpleweatherinformationservice.pojo;
 @description: City Name Used for input query
 */
 public class City {
-    public String cityName;
+    @Setter
+    @Getter
+    String cityName;
+
+    public City(){
+
+    }
+    public City(String cityName){
+        this.cityName = cityName;
+    }
 }

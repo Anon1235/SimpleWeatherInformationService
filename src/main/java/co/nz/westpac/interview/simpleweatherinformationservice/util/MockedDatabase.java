@@ -4,10 +4,7 @@ import co.nz.westpac.interview.simpleweatherinformationservice.constants.Constan
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.City;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.WeatherRecord;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  @author: matthew.yiqing.zhu
@@ -22,30 +19,38 @@ public class MockedDatabase {
     /**
      *  Storing cityList here, prepare for create a service to notice user available cities
      */
-    private static List<String> cityList  = new ArrayList<String>();
+    private static Set<String> citySet  = new HashSet<String>();
+
+    public static Set<String> getAllowedCities(){
+        return citySet;
+    }
+
+    /**
+     *  Mocking database querying, simple return result without business logic
+     */
     public static WeatherRecord getWeatherByCity(City city){
-        return mockedDatebase.get(city.cityName);
+        return mockedDatebase.get(city.getCityName());
     }
     /**
      *  Data initialization method, called at program starting
      */
     public static void initDatabase(){
-        cityList.add(Constants.CITY_NAME_AUCKLAND);
-        cityList.add(Constants.CITY_NAME_WELLINGTON);
-        cityList.add(Constants.CITY_NAME_HAMILTON);
-        cityList.add(Constants.CITY_NAME_TAURANGA);
+        citySet.add(Constants.CITY_NAME_AUCKLAND);
+        citySet.add(Constants.CITY_NAME_WELLINGTON);
+        citySet.add(Constants.CITY_NAME_HAMILTON);
+        citySet.add(Constants.CITY_NAME_TAURANGA);
 
-        mockedDatebase.put(Constants.CITY_NAME_AUCKLAND, new WeatherRecord(Constants.CITY_NAME_AUCKLAND,getRandomTemprature(),Constants.TEMPERATURE_UNIT_C,Constants.WEATHER_CONDITION_SUNNY);
-        mockedDatebase.put(Constants.CITY_NAME_WELLINGTON, new WeatherRecord(Constants.CITY_NAME_WELLINGTON,getRandomTemprature(),Constants.TEMPERATURE_UNIT_C,Constants.WEATHER_CONDITION_SNOW));
-        mockedDatebase.put(Constants.CITY_NAME_HAMILTON, new WeatherRecord(Constants.CITY_NAME_HAMILTON,getRandomTemprature(),Constants.TEMPERATURE_UNIT_C,Constants.WEATHER_CONDITION_CLOUDY);
-        mockedDatebase.put(Constants.CITY_NAME_TAURANGA, new WeatherRecord(Constants.CITY_NAME_TAURANGA,getRandomTemprature(),Constants.TEMPERATURE_UNIT_C,Constants.WEATHER_CONDITION_CLOUDY);
+        mockedDatebase.put(Constants.CITY_NAME_AUCKLAND, new WeatherRecord(Constants.CITY_NAME_AUCKLAND,getRandomTemprature(),Constants.TEMPERATURE_UNIT_C,null,Constants.WEATHER_CONDITION_SUNNY));
+        mockedDatebase.put(Constants.CITY_NAME_WELLINGTON, new WeatherRecord(Constants.CITY_NAME_WELLINGTON,getRandomTemprature(),Constants.TEMPERATURE_UNIT_C,null,Constants.WEATHER_CONDITION_SNOW));
+        mockedDatebase.put(Constants.CITY_NAME_HAMILTON, new WeatherRecord(Constants.CITY_NAME_HAMILTON,getRandomTemprature(),Constants.TEMPERATURE_UNIT_C,null,Constants.WEATHER_CONDITION_CLOUDY));
+        mockedDatebase.put(Constants.CITY_NAME_TAURANGA, new WeatherRecord(Constants.CITY_NAME_TAURANGA,getRandomTemprature(),Constants.TEMPERATURE_UNIT_C,null,Constants.WEATHER_CONDITION_CLOUDY));
     }
 
     /**
      *  Return a random temperature
      */
     public static String getRandomTemprature(){
-        return String.valueOf(-5+Math.random()*(30-1+1));
+        return String.valueOf((int)(-5+Math.random()*(30-1+1)));
     }
 
 }

@@ -17,17 +17,12 @@ public class WeatherRecord {
 
     //Constructor with initial data
     //Did not include date because in service always return the current data
-    public WeatherRecord(String city, String temp,String unit,String weather){
+    public WeatherRecord(String city, String temp,String unit,String date,String weather){
         this.city = city;
         this.temp = temp;
         this.unit = unit;
+        this.date = date;
         this.weather = weather;
-    }
-    public WeatherRecord(String not_exist_cityname){
-        this.city = not_exist_cityname + "not exist";
-        this.temp = "n/a";
-        this.unit = "n/a";
-        this.weather = "n/a";
     }
 
     //City name
