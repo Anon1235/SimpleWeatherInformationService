@@ -1,8 +1,8 @@
 package co.nz.westpac.interview.simpleweatherinformationservice.pojo;
 /**
- @auther: matthew.yiqing.zhu
- @Date:  April 30th 2024
- @Descrption: Data struct for mocked weather report
+ @author: matthew.yiqing.zhu
+ @date:  April 30th 2024
+ @description: Data struct for mocked weather report
  */
 public class WeatherRecord {
     //City name
