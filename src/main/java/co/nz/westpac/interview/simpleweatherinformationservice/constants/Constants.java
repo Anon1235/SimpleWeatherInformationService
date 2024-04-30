@@ -18,5 +18,12 @@ public class Constants {
     public static String CITY_NAME_TAURANGA = "Tauranga";
 
     public static String DATE_FORMAT = "dd/MM/yyyy";
-    public static String TIPS_INFORMATION_FOR_NOT_AVAILABLE_CITY = " not has record, please visit '/allowedcities' service to get available cities list";
+    public static String TIPS_INFORMATION_FOR_NOT_AVAILABLE_CITY = " does not has record, please visit '/availabilities' service to get available cities list";
+    public static String TIPS_INPUT_EXCEED = "Sorry, you only can query up tp 3 records in one time";
+
+    public static String TIPS_INPUT_NO_INPUT_CITY = "At least one city information needed";
+
+    public static String MASSAGE_TYPE_ERROR = "ERROR";
+    public static String MASSAGE_TYPE_TIPS = "TIPS";
+    public static String MASSAGE_TYPE_WARN = "WARN";
 }

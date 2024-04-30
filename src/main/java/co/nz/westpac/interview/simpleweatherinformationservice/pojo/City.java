@@ -13,12 +13,12 @@ import lombok.Setter;
 public class City {
     @Setter
     @Getter
-    String cityName;
+    String cityname;
 
     public City(){
 
     }
     public City(String cityName){
-        this.cityName = cityName;
+        this.cityname = cityName;
     }
 }

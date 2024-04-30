@@ -2,12 +2,9 @@ package co.nz.westpac.interview.simpleweatherinformationservice.dao;
 
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.City;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.WeatherRecord;
-import co.nz.westpac.interview.simpleweatherinformationservice.service.WeatherInformationService;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.MockedDatabase;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.WeatherRecordUtil;
-import org.apache.tomcat.util.digester.ArrayStack;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +29,7 @@ public class WeatherRecordDaoImpl implements WeatherRecordDao {
             if(record != null) {
                 returnList.add(record);
             }else{
-                returnList.add(WeatherRecordUtil.createWeatherRecordForNotExistCity(city.getCityName()));
+                returnList.add(WeatherRecordUtil.createWeatherRecordForNotExistCity(city.getCityname()));
             }
         }
         return returnList;

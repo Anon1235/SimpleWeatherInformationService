@@ -29,7 +29,7 @@ public class MockedDatabase {
      *  Mocking database querying, simple return result without business logic
      */
     public static WeatherRecord getWeatherByCity(City city){
-        return mockedDatebase.get(city.getCityName());
+        return mockedDatebase.get(city.getCityname());
     }
     /**
      *  Data initialization method, called at program starting
