@@ -8,7 +8,7 @@ import java.util.List;
 /**
  @author: matthew.yiqing.zhu
  @date:  April 30th 2024
- @description: Database service of weather information querying
+ @description: Service interface of weather information querying
  */
 public interface WeatherInformationService {
     public List<WeatherRecord> queryWeatherByCities(List<City> cityList);
