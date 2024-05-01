@@ -3,9 +3,17 @@ package co.nz.westpac.interview.simpleweatherinformationservice;
 import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.DataQueryException;
 import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.ServiceException;
 import co.nz.westpac.interview.simpleweatherinformationservice.constants.Constants;
+import co.nz.westpac.interview.simpleweatherinformationservice.dao.WeatherRecordDao;
+import co.nz.westpac.interview.simpleweatherinformationservice.dao.WeatherRecordDaoImpl;
 import co.nz.westpac.interview.simpleweatherinformationservice.service.WeatherInformationService;
+import co.nz.westpac.interview.simpleweatherinformationservice.service.WeatherRecordServcieImpl;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.MockedDatabase;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -29,10 +38,27 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	@MockBean
 	private WeatherInformationService weatherInformationService;
 
+//	@MockBean
+//	private WeatherRecordDao weatherRecordDao;
+
+	@InjectMocks
+	private WeatherInformationService weatherInformationServiceForServiceTest = new WeatherRecordServcieImpl();
+
+	//@Spy
+	@Mock
+	private WeatherRecordDao weatherRecordDaoForServiceTest;;
+
 	@Autowired
 	ApplicationContext context;
 	private static final String JSON_INPUT_1_CITY = "[{\"cityname\":\"Auckland\"}]";
 
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case between weatherInformationService and WeatherInformationController,
+	 make sure DataQueryException can be thrown to WeatherInformationController from weatherInformationService
+	 when call queryWeatherByCities method
+	 */
 	@Test
 	public void whenQueryWeatherRecordGetDaoException () throws Exception{
 		MockedDatabase.initDatabase();
@@ -45,6 +71,14 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_DAO_EXCEPTION))
 						.andDo(MockMvcResultHandlers.print());
 	}
+
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case between weatherInformationService and WeatherInformationController,
+	 make sure ServiceException can be thrown to WeatherInformationController from weatherInformationService
+	 when call queryWeatherByCities method
+	 */
 	@Test
 	public void whenQueryWeatherRecordGetServiceException () throws Exception{
 		MockedDatabase.initDatabase();
@@ -52,11 +86,18 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_1_CITY))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_SERVICE_EXCEPTION))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_SERVICE_EXCEPTION))
+						.andDo(MockMvcResultHandlers.print());
 	}
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case between weatherInformationService and WeatherInformationController,
+	 make sure unknown exceptions can be thrown to WeatherInformationController from weatherInformationService
+	 when call queryWeatherByCities method
+	 */
 	@Test
 	public void whenQueryWeatherRecordGetUnknowException () throws Exception{
 		MockedDatabase.initDatabase();
@@ -64,40 +105,117 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_1_CITY))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_UNKNOW_EXCEPTION))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_UNKNOW_EXCEPTION))
+						.andDo(MockMvcResultHandlers.print());
 	}
 
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case between weatherInformationService and WeatherInformationController,
+	 make sure ServiceException can be thrown to WeatherInformationController from weatherInformationService
+	 when call getAvailableCities method
+	 */
 	@Test
 	public void whenQueryAvaibleCitiesGetSerbviceException () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.getAvailableCities()).thenThrow(new ServiceException());
 		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_SERVICE_EXCEPTION))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_SERVICE_EXCEPTION))
+						.andDo(MockMvcResultHandlers.print());
 	}
+
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case between weatherInformationService and WeatherInformationController,
+	 make sure DataQueryExceptioncan can be thrown to WeatherInformationController from weatherInformationService
+	 when call getAvailableCities method
+	 */
 	@Test
 	public void whenQueryAvaibleCitiesGetDaoException () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.getAvailableCities()).thenThrow(new DataQueryException());
 		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_DAO_EXCEPTION))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_DAO_EXCEPTION))
+						.andDo(MockMvcResultHandlers.print());
 	}
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case between weatherInformationService and WeatherInformationController,
+	 make sure  unknown exceptions can be thrown to weatherInformationService from weatherRecordDAO
+	 when call getAvailableCities method
+	 */
 	@Test
 	public void whenQueryAvaibleCitiesGetUnknownException () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.getAvailableCities()).thenThrow(new Exception());
 		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_UNKNOW_EXCEPTION))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_UNKNOW_EXCEPTION))
+						.andDo(MockMvcResultHandlers.print());
+	}
+
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case between weatherInformationService and weatherRecordDAO,
+	 make sure  DataQueryException can be thrown to weatherInformationService from weatherRecordDAO
+	 when call getAvailableCities method
+	 */
+	@Test
+	public void whenQueryAvaibleCitiesServiceGetDataQueryException () throws Exception{
+		MockedDatabase.initDatabase();
+		when(weatherRecordDaoForServiceTest.getAvailableCities()).thenThrow(new DataQueryException());
+		Assert.assertThrows(DataQueryException.class, ()->weatherInformationServiceForServiceTest.getAvailableCities());
+	}
+
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case between weatherInformationService and weatherRecordDAO,
+	 make sure unknown exceptions can be thrown to weatherInformationService from weatherRecordDAO
+	 when call getAvailableCities method
+	 */
+	@Test
+	public void whenQueryAvaibleCitiesServiceGetException () throws Exception{
+		MockedDatabase.initDatabase();
+		when(weatherRecordDaoForServiceTest.getAvailableCities()).thenThrow(new Exception());
+		Assert.assertThrows(Exception.class, ()->weatherInformationServiceForServiceTest.getAvailableCities());
+	}
+
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case between weatherInformationService and weatherRecordDAO,
+	 make sure  DataQueryException can be thrown to weatherInformationService from weatherRecordDAO
+	 when call queryWeatherByCities method
+	 */
+	@Test
+	public void whenQueryWeatherRecordServiceGetDataQueryException () throws Exception{
+		MockedDatabase.initDatabase();
+		when(weatherRecordDaoForServiceTest.queryWeatherByCities(anyList())).thenThrow(new DataQueryException());
+		Assert.assertThrows(Exception.class, ()->weatherInformationServiceForServiceTest.queryWeatherByCities(anyList()));
+	}
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case between weatherInformationService and weatherRecordDAO,
+	 make sure unknown exceptions can be thrown weatherInformationService from weatherRecordDAO
+	 when call queryWeatherByCities method
+	 */
+	@Test
+	public void whenQueryWeatherRecordServiceGetUnknownException () throws Exception{
+		MockedDatabase.initDatabase();
+		when(weatherRecordDaoForServiceTest.queryWeatherByCities(anyList())).thenThrow(new Exception());
+		Assert.assertThrows(Exception.class, ()->weatherInformationServiceForServiceTest.queryWeatherByCities(anyList()));
 	}
 }

@@ -45,6 +45,11 @@ class SimpleWeatherInformationServiceApplicationTests {
 
 	private static final String JSON_INPUT_CONTAIN_SAME_CITY_NAME = "[{\"cityname\":\"Auckland\"},{\"cityname\":\"Auckland\"}]";
 
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case for check the query result weather information, with data of 1 city
+	 */
 	@Test
 	public void whenQueryWeatherRecordSuccessForOneCity () throws Exception{
 		MockedDatabase.initDatabase();
@@ -60,8 +65,13 @@ class SimpleWeatherInformationServiceApplicationTests {
 						.andDo(MockMvcResultHandlers.print());
 	}
 
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case for check the query result weather information, with date of 1 unavailable city
+	 */
 	@Test
-	public void whenQueryWeatherRecordNotExisitForOneCity () throws Exception{
+	public void whenQueryWeatherRecordUnavailableForOneCity () throws Exception{
 		MockedDatabase.initDatabase();
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
@@ -74,7 +84,11 @@ class SimpleWeatherInformationServiceApplicationTests {
 						.andExpect(MockMvcResultMatchers.jsonPath("$[0].weather").value(Constants.NA_VALUE))
 						.andDo(MockMvcResultHandlers.print());
 	}
-
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case for check the query result weather information, with data of 3 cities
+	 */
 	@Test
 	public void whenQueryWeatherRecordSuccessForThreeCities () throws Exception{
 		MockedDatabase.initDatabase();
@@ -99,8 +113,13 @@ class SimpleWeatherInformationServiceApplicationTests {
 						.andExpect(MockMvcResultMatchers.jsonPath("$[2].weather").isString())
 						.andDo(MockMvcResultHandlers.print());
 	}
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case for check the query result weather information, with data of 3 cities, 1 is unavailable
+	 */
 	@Test
-	public void whenQueryWeatherRecordSuccessForThreeCitiesWithOneNotAvaiable () throws Exception{
+	public void whenQueryWeatherRecordSuccessForThreeCitiesWithOneUnavailable() throws Exception{
 		MockedDatabase.initDatabase();
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
@@ -124,6 +143,11 @@ class SimpleWeatherInformationServiceApplicationTests {
 						.andDo(MockMvcResultHandlers.print());
 	}
 
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case for check the query result weather information, with empty input
+	 */
 	@Test
 	public void whenQueryWeatherRecordNoCityInput () throws Exception{
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
@@ -134,9 +158,13 @@ class SimpleWeatherInformationServiceApplicationTests {
 						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.TIPS_NO_INPUT_CITY))
 						.andDo(MockMvcResultHandlers.print());
 	}
-
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case for check the query result weather information, with data of 4 cities
+	 */
 	@Test
-	public void whenQueryWeatherRecordMoreThanThreeCityInput () throws Exception{
+	public void whenQueryWeatherRecordMoreThanThreeCitiesInput () throws Exception{
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_4_CITIES))
@@ -145,7 +173,11 @@ class SimpleWeatherInformationServiceApplicationTests {
 						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.TIPS_INPUT_EXCEED))
 						.andDo(MockMvcResultHandlers.print());
 	}
-
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 1st 2024
+	 @description: Test case for check the query result weather information, with data of 2 cities has same name
+	 */
 	@Test
 	public void whenQueryWeatherRecordSameCityInformationInput () throws Exception{
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
