@@ -1,13 +1,11 @@
 package co.nz.westpac.interview.simpleweatherinformationservice;
 
+
 import co.nz.westpac.interview.simpleweatherinformationservice.constants.Constants;
-import co.nz.westpac.interview.simpleweatherinformationservice.dao.WeatherRecordDao;
-import co.nz.westpac.interview.simpleweatherinformationservice.service.WeatherInformationService;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.MockedDatabase;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.NumberMatcher;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.UnitMatcher;
 import org.hamcrest.Matchers;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -106,23 +104,23 @@ class SimpleWeatherInformationServiceApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_3_CITY_ANT_1_CITY_NOT_AVAILABLE))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].city").value("Auckland"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].temp").value(NUMBER_MACTHER))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].unit").value(UNIT_MATCHER))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].date").value(DATA_FORMAT.format(new Date())))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].weather").isString())
-				.andExpect(MockMvcResultMatchers.jsonPath("$[1].city").value("Wellington"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[1].temp").value(NUMBER_MACTHER))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[1].unit").value(UNIT_MATCHER))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[1].date").value(DATA_FORMAT.format(new Date())))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[1].weather").isString())
-				.andExpect(MockMvcResultMatchers.jsonPath("$[2].city").value(Matchers.containsString(Constants.TIPS_INFORMATION_FOR_NOT_AVAILABLE_CITY)))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[2].temp").value(Constants.NA_VALUE))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[2].unit").value(Constants.NA_VALUE))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[2].date").value(Constants.NA_VALUE))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[2].weather").value(Constants.NA_VALUE))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.jsonPath("$[0].city").value("Auckland"))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[0].temp").value(NUMBER_MACTHER))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[0].unit").value(UNIT_MATCHER))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[0].date").value(DATA_FORMAT.format(new Date())))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[0].weather").isString())
+						.andExpect(MockMvcResultMatchers.jsonPath("$[1].city").value("Wellington"))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[1].temp").value(NUMBER_MACTHER))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[1].unit").value(UNIT_MATCHER))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[1].date").value(DATA_FORMAT.format(new Date())))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[1].weather").isString())
+						.andExpect(MockMvcResultMatchers.jsonPath("$[2].city").value(Matchers.containsString(Constants.TIPS_INFORMATION_FOR_NOT_AVAILABLE_CITY)))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[2].temp").value(Constants.NA_VALUE))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[2].unit").value(Constants.NA_VALUE))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[2].date").value(Constants.NA_VALUE))
+						.andExpect(MockMvcResultMatchers.jsonPath("$[2].weather").value(Constants.NA_VALUE))
+						.andDo(MockMvcResultHandlers.print());
 	}
 
 	@Test
@@ -130,9 +128,10 @@ class SimpleWeatherInformationServiceApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_NO_CITY))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.TIPS_NO_INPUT_CITY))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_TIPS))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.TIPS_NO_INPUT_CITY))
+						.andDo(MockMvcResultHandlers.print());
 	}
 
 	@Test
@@ -140,10 +139,9 @@ class SimpleWeatherInformationServiceApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_4_CITIES))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.TIPS_INPUT_EXCEED))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_TIPS))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.TIPS_INPUT_EXCEED))
+						.andDo(MockMvcResultHandlers.print());
 	}
-
-
 }
