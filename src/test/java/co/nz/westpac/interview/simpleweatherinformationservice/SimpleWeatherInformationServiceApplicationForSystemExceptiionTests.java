@@ -69,4 +69,35 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_UNKNOW_EXCEPTION))
 				.andDo(MockMvcResultHandlers.print());
 	}
+
+	@Test
+	public void whenQueryAvaibleCitiesGetSerbviceException () throws Exception{
+		MockedDatabase.initDatabase();
+		when(weatherInformationService.getAvailableCities()).thenThrow(new ServiceException());
+		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_SERVICE_EXCEPTION))
+				.andDo(MockMvcResultHandlers.print());
+	}
+	@Test
+	public void whenQueryAvaibleCitiesGetDaoException () throws Exception{
+		MockedDatabase.initDatabase();
+		when(weatherInformationService.getAvailableCities()).thenThrow(new DataQueryException());
+		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_DAO_EXCEPTION))
+				.andDo(MockMvcResultHandlers.print());
+	}
+	@Test
+	public void whenQueryAvaibleCitiesGetUnknownException () throws Exception{
+		MockedDatabase.initDatabase();
+		when(weatherInformationService.getAvailableCities()).thenThrow(new Exception());
+		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_UNKNOW_EXCEPTION))
+				.andDo(MockMvcResultHandlers.print());
+	}
 }
