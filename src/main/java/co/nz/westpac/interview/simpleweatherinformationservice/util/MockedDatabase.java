@@ -21,6 +21,9 @@ public class MockedDatabase {
      */
     private static Set<String> citySet  = new HashSet<String>();
 
+    /**
+     *  Method to return the available Cities data
+     */
     public static Set<String> getAvailableCities(){
         return citySet;
     }

@@ -43,7 +43,13 @@ public class WeatherRecordServcieImpl implements WeatherInformationService{
         }
         return daoResultlist;
     }
-
+    /**
+     @author: matthew.yiqing.zhu
+     @date:  May 1st 2024
+     @description: Call weatherRecordDao and return available cities' names for weather information querying
+     @param java.util.List<co.nz.westpac.interview.simpleweatherinformationservice.pojo.City>  List of City which input from frontend
+     @return java.util.List<co.nz.westpac.interview.simpleweatherinformationservice.pojo.WeatherRecord> Weather record per inputted cities
+     */
     public Set<String> getAvailableCities() throws DataQueryException, Exception{
         return weatherRecordDao.getAvailableCities();
     }

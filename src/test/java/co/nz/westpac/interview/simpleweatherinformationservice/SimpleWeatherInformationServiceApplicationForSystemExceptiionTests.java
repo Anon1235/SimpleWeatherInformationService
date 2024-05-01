@@ -119,7 +119,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call getAvailableCities method
 	 */
 	@Test
-	public void whenQueryAvaibleCitiesGetSerbviceException () throws Exception{
+	public void whenQueryAvaibleCitiesGetServiceException () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.getAvailableCities()).thenThrow(new ServiceException());
 		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
@@ -150,7 +150,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 @author: matthew.yiqing.zhu
 	 @date: May 1st 2024
 	 @description: Test case between weatherInformationService and WeatherInformationController,
-	 make sure  unknown exceptions can be thrown to weatherInformationService from weatherRecordDAO
+	 make sure unknown exceptions can be thrown to weatherInformationService from weatherRecordDAO
 	 when call getAvailableCities method
 	 */
 	@Test
@@ -196,7 +196,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 @author: matthew.yiqing.zhu
 	 @date: May 1st 2024
 	 @description: Test case between weatherInformationService and weatherRecordDAO,
-	 make sure  DataQueryException can be thrown to weatherInformationService from weatherRecordDAO
+	 make sure DataQueryException can be thrown to weatherInformationService from weatherRecordDAO
 	 when call queryWeatherByCities method
 	 */
 	@Test
