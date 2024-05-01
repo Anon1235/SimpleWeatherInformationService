@@ -7,10 +7,10 @@ public class WeatherRecordUtil {
     public static WeatherRecord createWeatherRecordForNotExistCity(String cityname){
         return new WeatherRecord(
                 cityname + Constants.TIPS_INFORMATION_FOR_NOT_AVAILABLE_CITY,//tips information
-                "n/a", //temperature
-                "n/a", //unit
-                "n/a", //date
-                "n/a" //weather condition
+                Constants.NA_VALUE, //temperature
+                Constants.NA_VALUE, //unit
+                Constants.NA_VALUE, //date
+                Constants.NA_VALUE //weather condition
             );
     }
 

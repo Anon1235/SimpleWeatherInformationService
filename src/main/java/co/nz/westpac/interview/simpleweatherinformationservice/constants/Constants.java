@@ -29,6 +29,8 @@ public class Constants {
 
     public static String DATE_FORMAT = "dd/MM/yyyy";
 
+    public static String NA_VALUE = "n/a";
+
     public static String TIPS_INFORMATION_FOR_NOT_AVAILABLE_CITY = " does not has record, please visit '/availabilities' service to get available cities list";
 
     public static String TIPS_INPUT_EXCEED = "Sorry, you only can query up tp 3 records in one time";
