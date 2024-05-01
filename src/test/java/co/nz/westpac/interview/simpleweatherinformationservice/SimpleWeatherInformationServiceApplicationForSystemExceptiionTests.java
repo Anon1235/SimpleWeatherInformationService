@@ -3,15 +3,9 @@ package co.nz.westpac.interview.simpleweatherinformationservice;
 import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.DataQueryException;
 import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.ServiceException;
 import co.nz.westpac.interview.simpleweatherinformationservice.constants.Constants;
-import co.nz.westpac.interview.simpleweatherinformationservice.dao.WeatherRecordDao;
 import co.nz.westpac.interview.simpleweatherinformationservice.service.WeatherInformationService;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.MockedDatabase;
-import co.nz.westpac.interview.simpleweatherinformationservice.util.NumberMatcher;
-import co.nz.westpac.interview.simpleweatherinformationservice.util.UnitMatcher;
-import org.hamcrest.Matchers;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,15 +17,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class SimpleWeatherInformationServiceApplicationForExceptiionTests {
+class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	@Autowired
 	private MockMvc mockMvc;
 

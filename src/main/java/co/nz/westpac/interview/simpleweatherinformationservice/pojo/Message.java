@@ -6,7 +6,7 @@ import lombok.Setter;
 /**
  @author: matthew.yiqing.zhu
  @date:  May 1st 2024
- @description: Massage object used for formalized return as JSON format value when exception or error occured
+ @description: Massage object used for formalized return as JSON format value when exception or error occurred
  */
 public class Message {
 

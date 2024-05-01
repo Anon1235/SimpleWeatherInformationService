@@ -30,7 +30,7 @@ public class WeatherRecord {
     @Getter
     String city;
 
-    //City Temperature
+    //Temperature
     @Setter
     @Getter
     String temp;
@@ -40,7 +40,7 @@ public class WeatherRecord {
     @Getter
     String unit;
 
-    //Weather Date
+    //Query  Date
     @Setter
     @Getter
     String date;

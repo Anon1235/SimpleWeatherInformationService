@@ -6,6 +6,7 @@ import co.nz.westpac.interview.simpleweatherinformationservice.pojo.City;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.WeatherRecord;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  @author: matthew.yiqing.zhu
@@ -14,4 +15,5 @@ import java.util.List;
  */
 public interface WeatherInformationService {
     public List<WeatherRecord> queryWeatherByCities(List<City> cityList) throws ServiceException, DataQueryException, Exception;
+    public Set<String> getAvailableCities() throws DataQueryException, Exception;
 }

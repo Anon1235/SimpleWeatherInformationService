@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 /**
  @author: matthew.yiqing.zhu
  @date:  April 30th 2024
@@ -26,6 +28,7 @@ public class WeatherRecordDaoImpl implements WeatherRecordDao {
     public List<WeatherRecord> queryWeatherByCities(List<City> cityList) throws DataQueryException, Exception{
         List<WeatherRecord> returnList = new ArrayList<WeatherRecord>();
         for(City city:cityList){
+            //because this is mocked in memory database instead of query in one time
             WeatherRecord record = MockedDatabase.getWeatherByCity(city);
             if(record != null) {
                 returnList.add(record);
@@ -34,6 +37,10 @@ public class WeatherRecordDaoImpl implements WeatherRecordDao {
             }
         }
         return returnList;
+    }
+
+    public Set<String> getAvailableCities() throws DataQueryException, Exception{
+        return MockedDatabase.getAvailableCities();
     }
 }
 

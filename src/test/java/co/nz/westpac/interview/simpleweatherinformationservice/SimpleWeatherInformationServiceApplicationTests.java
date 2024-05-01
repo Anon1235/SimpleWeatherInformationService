@@ -43,6 +43,7 @@ class SimpleWeatherInformationServiceApplicationTests {
 
 	private static final String JSON_INPUT_4_CITIES =  "[{\"cityname\":\"Auckland\"},{\"cityname\":\"Wellington\"},{\"cityname\":\"Hamilton\"},{\"cityname\":\"Tauranga\"}]";;
 
+	private static final String JSON_INPUT_CONTAIN_SAME_CITY_NAME = "[{\"cityname\":\"Auckland\"},{\"cityname\":\"Auckland\"}]";
 
 	@Test
 	public void whenQueryWeatherRecordSuccessForOneCity () throws Exception{
@@ -143,5 +144,16 @@ class SimpleWeatherInformationServiceApplicationTests {
 						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_TIPS))
 						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.TIPS_INPUT_EXCEED))
 						.andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	public void whenQueryWeatherRecordSameCityInformationInput () throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(JSON_INPUT_CONTAIN_SAME_CITY_NAME))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.SAME_CITY_QUERY_MESSAGE))
+				.andDo(MockMvcResultHandlers.print());
 	}
 }

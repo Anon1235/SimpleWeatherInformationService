@@ -2,7 +2,7 @@ package co.nz.westpac.interview.simpleweatherinformationservice.constants;
 /**
  @author: matthew.yiqing.zhu
  @date:  April 30th 2024
- @description: Constants values
+ @description: Constants values used in project
  */
 public class Constants {
     public static String TEMPERATURE_UNIT_C = "C";
@@ -48,4 +48,7 @@ public class Constants {
     public static String ERROR_DAO_EXCEPTION = "Sorry, some exception when get data, please try late or contact service supplier";
 
     public static String ERROR_UNKNOW_EXCEPTION = "Sorry, some exception occurred, please try late or contact service supplier";
+
+    public static String SAME_CITY_QUERY_MESSAGE = "Sorry, You need input different cities' information in one query";
+
 }

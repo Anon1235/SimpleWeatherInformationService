@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  @author: matthew.yiqing.zhu
@@ -41,6 +42,10 @@ public class WeatherRecordServcieImpl implements WeatherInformationService{
             }
         }
         return daoResultlist;
+    }
+
+    public Set<String> getAvailableCities() throws DataQueryException, Exception{
+        return weatherRecordDao.getAvailableCities();
     }
 }
 

@@ -35,7 +35,15 @@ public class MessageUtil {
     private static Message UNKNOW_EXCEPTION_MESSAGE;
 
     /**
-     * Massage used for unknown exception occurred
+     * Massage used for query contain same cities' name
+     */
+    private static Message SAME_CITY_QUERY_MESSAGE;
+
+    /**
+     @author: matthew.yiqing.zhu
+     @date:  May 1st 2024
+     @description: Use factory pattern to return unique Massage  object for input cities more than 3 exception
+     @return co.nz.westpac.interview.simpleweatherinformationservice.pojo.Message
      */
     public static Message getInputExceedMessage(){
         if(INPUT_EXCEED_MESSAGE!=null){
@@ -63,8 +71,8 @@ public class MessageUtil {
 
     /**
      @author: matthew.yiqing.zhu
-     @date:  May 1st 2024
-     @description: Use factory pattern to return unique Massage object for no input city information exception
+     @date: May 1st 2024
+     @description: Use factory pattern to return unique Massage object for service layer exception occurred
      @return co.nz.westpac.interview.simpleweatherinformationservice.pojo.Message
      */
     public static Message getServiceExcetionMessage(){
@@ -91,10 +99,11 @@ public class MessageUtil {
         }
     }
 
+
     /**
      @author: matthew.yiqing.zhu
      @date: May 1st 2024
-     @description: Use factory pattern to return unique Massage object for unknow exception occurred
+     @description: Use factory pattern to return unique Massage object for unknown exceptions occurred
      @return co.nz.westpac.interview.simpleweatherinformationservice.pojo.Message
      */
     public static Message getUnknowExceptionMessage(){
@@ -106,4 +115,18 @@ public class MessageUtil {
         }
     }
 
+    /**
+     @author: matthew.yiqing.zhu
+     @date: May 1st 2024
+     @description: Use factory pattern to return unique Massage object for same city occurred
+     @return co.nz.westpac.interview.simpleweatherinformationservice.pojo.Message
+     */
+    public static Message getSameCityQueryMessage(){
+        if(SAME_CITY_QUERY_MESSAGE!=null){
+            return SAME_CITY_QUERY_MESSAGE;
+        }else{
+            SAME_CITY_QUERY_MESSAGE = new Message(Constants.MASSAGE_TYPE_ERROR,Constants.SAME_CITY_QUERY_MESSAGE);
+            return SAME_CITY_QUERY_MESSAGE;
+        }
+    }
 }
