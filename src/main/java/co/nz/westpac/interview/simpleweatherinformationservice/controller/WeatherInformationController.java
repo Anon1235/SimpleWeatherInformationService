@@ -43,12 +43,15 @@ public class WeatherInformationController {
      */
     @RequestMapping("/queryweatherbycities")
     public ResponseEntity<Object> queryWeatherByCities(@RequestBody List<City> cityList, HttpServletResponse response) {
+        //if queried cities amount > 3 return error directly
         if(cityList.size() > 3){
             return new ResponseEntity<Object>(MessageUtil.getInputExceedMessage(), HttpStatus.OK);
         }
+        //if no city information > 3 return error directly
         if(cityList.size() == 0){
             return new ResponseEntity<Object>(MessageUtil.getNoInputCityMessage(), HttpStatus.OK);
         }
+        //if input cities name has diplicated value,  return error directly
         Set<String> cityNameSet = new HashSet<String>();
         for(City cityName:cityList){
             cityNameSet.add(cityName.getCityname());
@@ -56,6 +59,7 @@ public class WeatherInformationController {
         if(cityNameSet.size()<cityList.size()){
             return new ResponseEntity<Object>(MessageUtil.getSameCityQueryMessage(), HttpStatus.OK);
         }
+        //Call service to get weather information
         List<WeatherRecord> weatherRecords = new ArrayList<WeatherRecord>();
         try {
             weatherRecords = weatherInformationService.queryWeatherByCities(cityList);
