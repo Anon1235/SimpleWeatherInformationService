@@ -10,15 +10,17 @@ import java.nio.charset.Charset;
 
 public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
-
     private final byte[] body;
     private String bodyStr;
+
+    private HttpServletRequest request;
 
     public BodyReaderHttpServletRequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
         String bodyString = getBodyString(request);
-        body = bodyString.getBytes(Charset.forName("UTF-8"));
+        body = bodyString.getBytes(request.getCharacterEncoding());
         bodyStr=bodyString;
+        this.request = request;
     }
 
     public String getBodyStr() {
@@ -60,7 +62,7 @@ public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapp
         try {
             inputStream = request.getInputStream();
             reader = new BufferedReader(
-                    new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+                    new InputStreamReader(inputStream, request.getCharacterEncoding()));
 
             char[] bodyCharBuffer = new char[1024];
             int len = 0;
