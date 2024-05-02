@@ -2,20 +2,16 @@ package co.nz.westpac.interview.simpleweatherinformationservice.controller;
 
 import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.DataQueryException;
 import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.ServiceException;
-import co.nz.westpac.interview.simpleweatherinformationservice.constants.Constants;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.City;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.WeatherRecord;
 import co.nz.westpac.interview.simpleweatherinformationservice.service.WeatherInformationService;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.MessageUtil;
-import co.nz.westpac.interview.simpleweatherinformationservice.util.MockedDatabase;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,11 +34,13 @@ public class WeatherInformationController {
      @date:  April 30th 2024
      @description: webservice endpoint method to provide the restful result for weather information
      @param java.util.List<co.nz.westpac.interview.simpleweatherinformationservice.pojo.City>  List of City which input from frontend
+     @param jakarta.servlet.http.HttpServletRequest For Log System support
      @param jakarta.servlet.http.HttpServletResponse Handle http parameter which need work for the response
      @return org.springframework.http.ResponseEntity contain the query result and the HTTP status information
      */
     @RequestMapping("/queryweatherbycities")
-    public ResponseEntity<Object> queryWeatherByCities(@RequestBody List<City> cityList, HttpServletResponse response) {
+    @ResponseBody
+    public ResponseEntity<Object> queryWeatherByCities(@RequestBody List<City> cityList, HttpServletRequest request, HttpServletResponse response) {
         //if queried cities amount > 3 return error directly
         if(cityList.size() > 3){
             return new ResponseEntity<Object>(MessageUtil.getInputExceedMessage(), HttpStatus.OK);
@@ -81,11 +79,12 @@ public class WeatherInformationController {
      @author: matthew.yiqing.zhu
      @date:  April 30th 2024
      @description: webservice endpoint method provide available cities for weather information querying
+     @param jakarta.servlet.http.HttpServletRequest For Log System support
      @param jakarta.servlet.http.HttpServletResponse Handle http parameter which need work for the response
      @return org.springframework.http.ResponseEntity contain the query result and the HTTP status information
      */
     @RequestMapping("/availablecities")
-    public ResponseEntity<Object> getAvailableCities(HttpServletResponse response) {
+    public ResponseEntity<Object> getAvailableCities(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         Set<String> availableCities = new HashSet<>();
         try {
@@ -106,11 +105,12 @@ public class WeatherInformationController {
      @author: matthew.yiqing.zhu
      @date:  April 30th 2024
      @description: webservice endpoint method provide manual for clients
+     @param jakarta.servlet.http.HttpServletRequest For Log System support
      @param jakarta.servlet.http.HttpServletResponse Handle http parameter which need work for the response
      @return ResponseEntity contain the query result and the HTTP status information
      */
     @RequestMapping("/")
-    public ResponseEntity<Object> availableService(HttpServletResponse response) {
+    public ResponseEntity<Object> availableService(HttpServletRequest request,HttpServletResponse response) {
         List<String> tips = new ArrayList<String>();
         tips.add("Welcome, currently following services are available");
         tips.add("1. /queryweatherbycities, input city list (up to 3, each city should have different name) and get current weather record");
