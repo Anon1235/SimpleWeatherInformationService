@@ -47,7 +47,7 @@ public class LoggerAdvice {
             ResponseEntity responseEntity = (ResponseEntity)result;
             ObjectMapper mapper = new ObjectMapper();
             logger.info("Request with ID "+request.getRequestId() + " from "+request.getRemoteAddr()+" \n\r accessed "+
-                    request.getRequestURI()+ " with RequestBody \n\r"+
+                    request.getRequestURI()+ " returned response \n\r"+
                     mapper.writeValueAsString(responseEntity.getBody()));
         } catch (Exception e) {
             logger.error("Exception occurred in Logger advice (afterReturnAdvice)");
