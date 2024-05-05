@@ -26,8 +26,8 @@ public class LoggerAdvice {
             "args(..,request,response)")
     public void beforeAdvice(HttpServletRequest request, HttpServletResponse response) {
         try {
-            logger.info("Request with ID "+ request.getRequestId() + " from "+request.getRemoteAddr()+" \n\r accessed "+
-                    request.getRequestURI()+ " with RequestBody \n\r"+
+            logger.info("Request Logger: Request with ID "+ request.getRequestId() + " from "+request.getRemoteAddr()+" \n\r accessed "+
+                    request.getRequestURI()+ " with RequestBody: \n\r"+
                     new BodyReaderHttpServletRequestWrapper(request).getBodyStr());
         } catch (IOException e) {
             logger.error("IOException occurred in Logger advice (beforeAdvice)");
@@ -46,8 +46,10 @@ public class LoggerAdvice {
         try {
             ResponseEntity responseEntity = (ResponseEntity)result;
             ObjectMapper mapper = new ObjectMapper();
-            logger.info("Request with ID "+request.getRequestId() + " from "+request.getRemoteAddr()+" \n\r accessed "+
-                    request.getRequestURI()+ " returned response \n\r"+
+            logger.info("Response Logger: Request with ID "+request.getRequestId() + " from "+request.getRemoteAddr()+" \n\r accessed "+
+                    request.getRequestURI()+ " with RequestBody: \\n\\r" +
+                    new BodyReaderHttpServletRequestWrapper(request).getBodyStr() +"\\n\\r" +
+                    " with returned response:  \\n\\r" +
                     mapper.writeValueAsString(responseEntity.getBody()));
         } catch (Exception e) {
             logger.error("Exception occurred in Logger advice (afterReturnAdvice)");
