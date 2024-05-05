@@ -2,6 +2,7 @@ package co.nz.westpac.interview.simpleweatherinformationservice.util;
 
 import co.nz.westpac.interview.simpleweatherinformationservice.constants.Constants;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.Message;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 
 /**
  @author: matthew.yiqing.zhu
@@ -38,6 +39,17 @@ public class MessageUtil {
      * Massage used for query contain same cities' name
      */
     private static Message SAME_CITY_QUERY_MESSAGE;
+
+    /**
+     * Massage used for 400 Bad Request Exception
+     */
+    private static Message EXCEPTION_MESSAGE_UNREADABLE;
+
+
+    /**
+     * Massage used for 404 Not Found Exception
+     */
+    private static Message EXCEPTION_NOT_FOUND;
 
     /**
      @author: matthew.yiqing.zhu
@@ -129,4 +141,36 @@ public class MessageUtil {
             return SAME_CITY_QUERY_MESSAGE;
         }
     }
+
+    /**
+     @author: matthew.yiqing.zhu
+     @date: May 5st 2024
+     @description: Use factory pattern
+     @return co.nz.westpac.interview.simpleweatherinformationservice.pojo.Message
+     */
+    public static Message getExceptionUnreadableMessage(){
+        if(EXCEPTION_MESSAGE_UNREADABLE!=null){
+            return EXCEPTION_MESSAGE_UNREADABLE;
+        }else{
+            EXCEPTION_MESSAGE_UNREADABLE = new Message(Constants.MASSAGE_TYPE_ERROR,Constants.EXCEPTION_MESSAGE_UNREADABLE);
+            return EXCEPTION_MESSAGE_UNREADABLE;
+        }
+    }
+
+    /**
+     @author: matthew.yiqing.zhu
+     @date: May 5st 2024
+     @description: Use factory pattern
+     @return co.nz.westpac.interview.simpleweatherinformationservice.pojo.Message
+     */
+    public static Message getExceptionNotFoundMessage(){
+        if(EXCEPTION_NOT_FOUND!=null){
+            return EXCEPTION_NOT_FOUND;
+        }else{
+            EXCEPTION_NOT_FOUND = new Message(Constants.MASSAGE_TYPE_ERROR,Constants.EXCEPTION_MESSAGE_NOT_FOUND);
+            return EXCEPTION_NOT_FOUND;
+        }
+    }
+
+
 }

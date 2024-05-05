@@ -29,6 +29,7 @@ public class WeatherRecordDaoImpl implements WeatherRecordDao {
         List<WeatherRecord> returnList = new ArrayList<WeatherRecord>();
         for(City city:cityList){
             //because this is mocked in memory database instead of query in one time
+            //When use real RDS, need be optimised to access database only once)
             WeatherRecord record = MockedDatabase.getWeatherByCity(city);
             if(record != null) {
                 returnList.add(record);
