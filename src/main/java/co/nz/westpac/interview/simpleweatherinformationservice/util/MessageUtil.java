@@ -144,7 +144,7 @@ public class MessageUtil {
 
     /**
      @author: matthew.yiqing.zhu
-     @date: May 5st 2024
+     @date: May 5th 2024
      @description: Use factory pattern
      @return co.nz.westpac.interview.simpleweatherinformationservice.pojo.Message
      */
@@ -159,7 +159,7 @@ public class MessageUtil {
 
     /**
      @author: matthew.yiqing.zhu
-     @date: May 5st 2024
+     @date: May 5th 2024
      @description: Use factory pattern
      @return co.nz.westpac.interview.simpleweatherinformationservice.pojo.Message
      */

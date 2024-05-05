@@ -34,7 +34,7 @@ public class WeatherRecordDaoImpl implements WeatherRecordDao {
             if(record != null) {
                 returnList.add(record);
             }else{
-                returnList.add(WeatherRecordUtil.createWeatherRecordForNotExistCity(city.getCityname()));
+                returnList.add(WeatherRecordUtil.createWeatherRecordForUnavaiableCity(city.getCityname()));
             }
         }
         return returnList;
