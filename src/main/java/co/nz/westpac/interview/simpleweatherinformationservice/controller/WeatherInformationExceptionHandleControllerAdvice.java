@@ -26,7 +26,4 @@ public class WeatherInformationExceptionHandleControllerAdvice {
     public ResponseEntity<Object> handelHttpMessageNotReadableException() {
             return new ResponseEntity<Object>(MessageUtil.getExceptionUnreadableMessage(), HttpStatus.BAD_REQUEST);
     }
-
-
-
 }

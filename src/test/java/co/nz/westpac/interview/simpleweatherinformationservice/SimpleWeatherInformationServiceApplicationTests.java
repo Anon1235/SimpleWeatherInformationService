@@ -186,10 +186,10 @@ class SimpleWeatherInformationServiceApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_CONTAIN_SAME_CITY_NAME))
-				.andExpect(MockMvcResultMatchers.status().isBadRequest())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.SAME_CITY_QUERY_MESSAGE))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isBadRequest())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.SAME_CITY_QUERY_MESSAGE))
+						.andDo(MockMvcResultHandlers.print());
 	}
 
 	/**
@@ -202,10 +202,10 @@ class SimpleWeatherInformationServiceApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_CONTAIN_EMPTY_CITY_NAME))
-				.andExpect(MockMvcResultMatchers.status().isBadRequest())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.EXCEPTION_MESSAGE_UNREADABLE))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isBadRequest())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.EXCEPTION_MESSAGE_UNREADABLE))
+						.andDo(MockMvcResultHandlers.print());
 	}
 
 	/**
@@ -218,9 +218,55 @@ class SimpleWeatherInformationServiceApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_CONTAIN_WRONG_PROPERTIES_NAME))
-				.andExpect(MockMvcResultMatchers.status().isBadRequest())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.EXCEPTION_MESSAGE_UNREADABLE))
-				.andDo(MockMvcResultHandlers.print());
+						.andExpect(MockMvcResultMatchers.status().isBadRequest())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.EXCEPTION_MESSAGE_UNREADABLE))
+						.andDo(MockMvcResultHandlers.print());
+	}
+
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 5th 2024
+	 @description: Test case for call /queryweatherbycities out of GET method, and POST method
+	 */
+	@Test
+	public void whenQueryWeatherInformationNotUseGetMethod () throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.post("/queryweatherbycities")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(JSON_INPUT_1_CITY))
+						.andExpect(MockMvcResultMatchers.status().isMethodNotAllowed())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.EXCEPTION_MESSAGE_NOT_ALLOWED))
+						.andDo(MockMvcResultHandlers.print());
+	}
+
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 5th 2024
+	 @description: Test case for call /availablecities out of GET method, and POST method
+	 */
+	@Test
+	public void whenQueryAvailableCitiesNotUseGetMethod () throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.post("/availablecities")
+						.contentType(MediaType.APPLICATION_JSON))
+						.andExpect(MockMvcResultMatchers.status().isMethodNotAllowed())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.EXCEPTION_MESSAGE_NOT_ALLOWED))
+						.andDo(MockMvcResultHandlers.print());
+	}
+
+
+	/**
+	 @author: matthew.yiqing.zhu
+	 @date: May 5th 2024
+	 @description: Test case for call not existed uri resource
+	 */
+	@Test
+	public void whenQueryResourceNotFound () throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.get("/notexisituri"))
+						.andExpect(MockMvcResultMatchers.status().isNotFound())
+						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
+						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.EXCEPTION_MESSAGE_NOT_FOUND))
+						.andDo(MockMvcResultHandlers.print());
 	}
 }
