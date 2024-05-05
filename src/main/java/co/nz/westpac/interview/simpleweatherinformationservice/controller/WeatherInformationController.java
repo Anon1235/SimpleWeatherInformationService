@@ -115,14 +115,14 @@ public class WeatherInformationController {
      @param jakarta.servlet.http.HttpServletResponse Handle http parameter which need work for the response
      @return ResponseEntity contain the query result and the HTTP status information
      */
-    @GetMapping("/")
+    @RequestMapping("/")
     public ResponseEntity<Object> getAvailableService(HttpServletRequest request,HttpServletResponse response) {
         List<String> tips = new ArrayList<String>();
         tips.add("Welcome, currently following services are available");
-        tips.add("1. /queryweatherbycities, input city list (up to 3, each city should have different name) and get current weather record");
+        tips.add("1. /queryweatherbycities, support GET Method input city list (up to 3, each city should have different name) and get current weather record");
         tips.add(" Need webservice client support and The input format like following:");
         tips.add("   [ {\"cityname\": \"Auckland\"} , {\"cityname\": \"Wellington\"}  ]   ");
-        tips.add("2. /availablecities, query record of which cities are available");
+        tips.add("2. /availablecities, support GET Method, query record of which cities are available");
         //For allow clients from other IP address can receive the result
         response.setHeader("Access-Control-Allow-Origin", "*");
         return new ResponseEntity<Object>(tips, HttpStatus.OK);

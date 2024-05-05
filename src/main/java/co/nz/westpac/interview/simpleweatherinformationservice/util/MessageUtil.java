@@ -52,6 +52,11 @@ public class MessageUtil {
     private static Message EXCEPTION_NOT_FOUND;
 
     /**
+     * Massage used for 405 Method Not Allowed
+     */
+    private static Message EXCEPTION_Method_NOT_ALLOWED;
+
+    /**
      @author: matthew.yiqing.zhu
      @date:  May 1st 2024
      @description: Use factory pattern to return unique Massage  object for input cities more than 3 exception
@@ -169,6 +174,21 @@ public class MessageUtil {
         }else{
             EXCEPTION_NOT_FOUND = new Message(Constants.MASSAGE_TYPE_ERROR,Constants.EXCEPTION_MESSAGE_NOT_FOUND);
             return EXCEPTION_NOT_FOUND;
+        }
+    }
+
+    /**
+     @author: matthew.yiqing.zhu
+     @date: May 5th 2024
+     @description: Use factory pattern
+     @return co.nz.westpac.interview.simpleweatherinformationservice.pojo.Message
+     */
+    public static Message getExceptionMethodNotAlowedMessage(){
+        if(EXCEPTION_Method_NOT_ALLOWED!=null){
+            return EXCEPTION_Method_NOT_ALLOWED;
+        }else{
+            EXCEPTION_Method_NOT_ALLOWED = new Message(Constants.MASSAGE_TYPE_ERROR,Constants.EXCEPTION_MESSAGE_NOT_ALLOWED);
+            return EXCEPTION_Method_NOT_ALLOWED;
         }
     }
 
