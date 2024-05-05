@@ -49,13 +49,18 @@ public class WeatherInformationController {
         if(cityList.size() == 0){
             return new ResponseEntity<Object>(MessageUtil.getNoInputCityMessage(), HttpStatus.OK);
         }
-        //if input cities name has diplicated value,  return error directly
+        //if input cities name has duplicated value,  return error directly
+        //if some case,  input properties or name maybe null, The ckeck or put here to reduce the loop ammount
         Set<String> cityNameSet = new HashSet<String>();
         for(City cityName:cityList){
-            cityNameSet.add(cityName.getCityname());
+            String cityname  = cityName.getCityname();
+            if (cityname==null||cityname.equals("")){
+                return new ResponseEntity<Object>(MessageUtil.getExceptionUnreadableMessage(), HttpStatus.BAD_REQUEST);
+            }
+            cityNameSet.add(cityname);
         }
         if(cityNameSet.size()<cityList.size()){
-            return new ResponseEntity<Object>(MessageUtil.getSameCityQueryMessage(), HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getSameCityQueryMessage(), HttpStatus.BAD_REQUEST);
         }
         //Call service to get weather information
         List<WeatherRecord> weatherRecords = new ArrayList<WeatherRecord>();
@@ -63,13 +68,13 @@ public class WeatherInformationController {
             weatherRecords = weatherInformationService.queryWeatherByCities(cityList);
         } catch (ServiceException e) {
             e.printStackTrace();
-            return new ResponseEntity<Object>(MessageUtil.getServiceExcetionMessage(), HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getServiceExcetionMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (DataQueryException e) {
             e.printStackTrace();
-            return new ResponseEntity<Object>(MessageUtil.getDaoExcetionMessage(), HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getDaoExcetionMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<Object>(MessageUtil.getUnknowExceptionMessage(), HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getUnknowExceptionMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         //For allow clients from other IP address can receive the result
         response.setHeader("Access-Control-Allow-Origin", "*");

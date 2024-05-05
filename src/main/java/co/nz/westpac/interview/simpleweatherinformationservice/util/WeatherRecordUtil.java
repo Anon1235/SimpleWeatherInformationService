@@ -17,7 +17,7 @@ public class WeatherRecordUtil {
      @param java.lang.String city's name
      @return co.nz.westpac.interview.simpleweatherinformationservice.pojo.WeatherRecord WeatherRecord information with unavailable city
      */
-    public static WeatherRecord createWeatherRecordForUnavaiableCity(String cityname){
+    public static WeatherRecord createWeatherRecordForNotExistCity(String cityname){
         return new WeatherRecord(
                 cityname + Constants.TIPS_INFORMATION_FOR_NOT_AVAILABLE_CITY,//tips information
                 Constants.NA_VALUE, //temperature
