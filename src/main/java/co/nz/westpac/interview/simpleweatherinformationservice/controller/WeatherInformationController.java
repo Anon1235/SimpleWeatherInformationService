@@ -6,8 +6,10 @@ import co.nz.westpac.interview.simpleweatherinformationservice.pojo.City;
 import co.nz.westpac.interview.simpleweatherinformationservice.pojo.WeatherRecord;
 import co.nz.westpac.interview.simpleweatherinformationservice.service.WeatherInformationService;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.MessageUtil;
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.catalina.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +40,8 @@ public class WeatherInformationController {
      @param jakarta.servlet.http.HttpServletResponse Handle http parameter which need work for the response
      @return org.springframework.http.ResponseEntity contain the query result and the HTTP status information
      */
-    @RequestMapping("/queryweatherbycities")
-    @ResponseBody
-    public ResponseEntity<Object> queryWeatherByCities(@RequestBody List<City> cityList, HttpServletRequest request, HttpServletResponse response) {
+    @GetMapping("/queryweatherbycities")
+    public ResponseEntity<Object> queryWeatherInformationByCities(@RequestBody List<City> cityList, HttpServletRequest request, HttpServletResponse response) {
         //if queried cities amount > 3 return error directly
         if(cityList.size() > 3){
             return new ResponseEntity<Object>(MessageUtil.getInputExceedMessage(), HttpStatus.BAD_REQUEST);
@@ -54,7 +55,7 @@ public class WeatherInformationController {
         Set<String> cityNameSet = new HashSet<String>();
         for(City cityName:cityList){
             String cityname  = cityName.getCityname();
-            if (cityname==null||cityname.equals("")){
+            if (StringUtils.isBlank(cityname)){
                 return new ResponseEntity<Object>(MessageUtil.getExceptionUnreadableMessage(), HttpStatus.BAD_REQUEST);
             }
             cityNameSet.add(cityname);
@@ -88,7 +89,7 @@ public class WeatherInformationController {
      @param jakarta.servlet.http.HttpServletResponse Handle http parameter which need work for the response
      @return org.springframework.http.ResponseEntity contain the query result and the HTTP status information
      */
-    @RequestMapping("/availablecities")
+    @GetMapping("/availablecities")
     public ResponseEntity<Object> getAvailableCities(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         Set<String> availableCities = new HashSet<>();
@@ -114,8 +115,8 @@ public class WeatherInformationController {
      @param jakarta.servlet.http.HttpServletResponse Handle http parameter which need work for the response
      @return ResponseEntity contain the query result and the HTTP status information
      */
-    @RequestMapping("/")
-    public ResponseEntity<Object> availableService(HttpServletRequest request,HttpServletResponse response) {
+    @GetMapping("/")
+    public ResponseEntity<Object> getAvailableService(HttpServletRequest request,HttpServletResponse response) {
         List<String> tips = new ArrayList<String>();
         tips.add("Welcome, currently following services are available");
         tips.add("1. /queryweatherbycities, input city list (up to 3, each city should have different name) and get current weather record");
