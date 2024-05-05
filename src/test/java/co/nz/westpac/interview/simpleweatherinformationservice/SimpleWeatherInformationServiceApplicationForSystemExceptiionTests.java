@@ -66,7 +66,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_1_CITY))
-						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError())
 						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
 						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_DAO_EXCEPTION))
 						.andDo(MockMvcResultHandlers.print());
@@ -86,7 +86,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_1_CITY))
-						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError())
 						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
 						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_SERVICE_EXCEPTION))
 						.andDo(MockMvcResultHandlers.print());
@@ -105,7 +105,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JSON_INPUT_1_CITY))
-						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError())
 						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
 						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_UNKNOW_EXCEPTION))
 						.andDo(MockMvcResultHandlers.print());
@@ -123,7 +123,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.getAvailableCities()).thenThrow(new ServiceException());
 		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
-						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError())
 						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
 						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_SERVICE_EXCEPTION))
 						.andDo(MockMvcResultHandlers.print());
@@ -141,7 +141,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.getAvailableCities()).thenThrow(new DataQueryException());
 		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
-						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError())
 						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
 						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_DAO_EXCEPTION))
 						.andDo(MockMvcResultHandlers.print());
@@ -158,7 +158,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.getAvailableCities()).thenThrow(new Exception());
 		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
-						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError())
 						.andExpect(MockMvcResultMatchers.jsonPath("$.messageType").value(Constants.MASSAGE_TYPE_ERROR))
 						.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.ERROR_UNKNOW_EXCEPTION))
 						.andDo(MockMvcResultHandlers.print());

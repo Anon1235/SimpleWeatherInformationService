@@ -43,11 +43,11 @@ public class WeatherInformationController {
     public ResponseEntity<Object> queryWeatherByCities(@RequestBody List<City> cityList, HttpServletRequest request, HttpServletResponse response) {
         //if queried cities amount > 3 return error directly
         if(cityList.size() > 3){
-            return new ResponseEntity<Object>(MessageUtil.getInputExceedMessage(), HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getInputExceedMessage(), HttpStatus.BAD_REQUEST);
         }
         //if no city information > 3 return error directly
         if(cityList.size() == 0){
-            return new ResponseEntity<Object>(MessageUtil.getNoInputCityMessage(), HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getNoInputCityMessage(), HttpStatus.BAD_REQUEST);
         }
         //if input cities name has duplicated value,  return error directly
         //if some case,  input properties or name maybe null, The ckeck or put here to reduce the loop ammount
@@ -96,13 +96,13 @@ public class WeatherInformationController {
             availableCities =  weatherInformationService.getAvailableCities();
         } catch (ServiceException e) {
             e.printStackTrace();
-            return new ResponseEntity<Object>(MessageUtil.getServiceExcetionMessage(), HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getServiceExcetionMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (DataQueryException e) {
             e.printStackTrace();
-            return new ResponseEntity<Object>(MessageUtil.getDaoExcetionMessage(), HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getDaoExcetionMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<Object>(MessageUtil.getUnknowExceptionMessage(), HttpStatus.OK);
+            return new ResponseEntity<Object>(MessageUtil.getUnknowExceptionMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<Object>(availableCities, HttpStatus.OK);
     }
