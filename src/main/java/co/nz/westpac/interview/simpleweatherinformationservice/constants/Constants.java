@@ -51,7 +51,7 @@ public class Constants {
 
     public static String SAME_CITY_QUERY_MESSAGE = "Sorry, You need input different cities' information in one query";
 
-    public static String EXCEPTION_MESSAGE_UNREADABLE = "Sorry, your input format may be wrong, the format is following (remove Backslashs(\\) if see them, city list up to 3, each city should have different name): [ {\"cityname\": \"Auckland\"} , {\"cityname\": \"Wellington\"}  ]) ";
+    public static String EXCEPTION_MESSAGE_UNREADABLE = "Sorry, your input format may be wrong, check the format or properties name and/or symbols, the format is following (remove Backslashs(\\) if see them, city list up to 3, each city should have different name,): [ {\"cityname\": \"Auckland\"} , {\"cityname\": \"Wellington\"}  ]) ";
 
     public static String EXCEPTION_MESSAGE_NOT_FOUND = "Sorry, the visited URI path is not found, currently only /, /queryweatherbycities and /availablecities is available, visit / for more information of using.";
 }

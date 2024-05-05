@@ -4,7 +4,6 @@ import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.DataQu
 import co.nz.westpac.interview.simpleweatherinformationservice.Exceptions.ServiceException;
 import co.nz.westpac.interview.simpleweatherinformationservice.constants.Constants;
 import co.nz.westpac.interview.simpleweatherinformationservice.dao.WeatherRecordDao;
-import co.nz.westpac.interview.simpleweatherinformationservice.dao.WeatherRecordDaoImpl;
 import co.nz.westpac.interview.simpleweatherinformationservice.service.WeatherInformationService;
 import co.nz.westpac.interview.simpleweatherinformationservice.service.WeatherRecordServcieImpl;
 import co.nz.westpac.interview.simpleweatherinformationservice.util.MockedDatabase;
@@ -12,8 +11,6 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,13 +35,9 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	@MockBean
 	private WeatherInformationService weatherInformationService;
 
-//	@MockBean
-//	private WeatherRecordDao weatherRecordDao;
-
 	@InjectMocks
 	private WeatherInformationService weatherInformationServiceForServiceTest = new WeatherRecordServcieImpl();
 
-	//@Spy
 	@Mock
 	private WeatherRecordDao weatherRecordDaoForServiceTest;;
 
@@ -60,7 +53,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call queryWeatherByCities method
 	 */
 	@Test
-	public void whenQueryWeatherRecordGetDaoException () throws Exception{
+	public void whenQueryWeatherInformationControllerGotDaoExceptionFromService() throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.queryWeatherByCities(anyList())).thenThrow(new DataQueryException());
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
@@ -80,7 +73,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call queryWeatherByCities method
 	 */
 	@Test
-	public void whenQueryWeatherRecordGetServiceException () throws Exception{
+	public void whenQueryWeatherInformationControllerGotServiceExceptionFromService () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.queryWeatherByCities(anyList())).thenThrow(new ServiceException());
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
@@ -99,7 +92,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call queryWeatherByCities method
 	 */
 	@Test
-	public void whenQueryWeatherRecordGetUnknowException () throws Exception{
+	public void whenQueryWeatherInformationControllerGotUnknownExceptionFromService () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.queryWeatherByCities(anyList())).thenThrow(new Exception());
 		mockMvc.perform(MockMvcRequestBuilders.get("/queryweatherbycities")
@@ -119,7 +112,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call getAvailableCities method
 	 */
 	@Test
-	public void whenQueryAvaibleCitiesGetServiceException () throws Exception{
+	public void whenQueryAvailableCitiesControllerGotServiceExceptionFromService() throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.getAvailableCities()).thenThrow(new ServiceException());
 		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
@@ -137,7 +130,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call getAvailableCities method
 	 */
 	@Test
-	public void whenQueryAvaibleCitiesGetDaoException () throws Exception{
+	public void whenQueryAvailableCitiesControllerGotDataQueryExceptionFromService() throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.getAvailableCities()).thenThrow(new DataQueryException());
 		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
@@ -154,7 +147,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call getAvailableCities method
 	 */
 	@Test
-	public void whenQueryAvaibleCitiesGetUnknownException () throws Exception{
+	public void whenQueryAvailableCitiesControllerFotUnknownExceptionFromService () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherInformationService.getAvailableCities()).thenThrow(new Exception());
 		mockMvc.perform(MockMvcRequestBuilders.get("/availablecities"))
@@ -172,7 +165,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call getAvailableCities method
 	 */
 	@Test
-	public void whenQueryAvaibleCitiesServiceGetDataQueryException () throws Exception{
+	public void whenQueryAvailableCitiesServiceGotDataQueryExceptionFromDao () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherRecordDaoForServiceTest.getAvailableCities()).thenThrow(new DataQueryException());
 		Assert.assertThrows(DataQueryException.class, ()->weatherInformationServiceForServiceTest.getAvailableCities());
@@ -186,7 +179,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call getAvailableCities method
 	 */
 	@Test
-	public void whenQueryAvaibleCitiesServiceGetException () throws Exception{
+	public void whenQueryAvailableCitiesServiceGotUnknownExceptionFromDao () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherRecordDaoForServiceTest.getAvailableCities()).thenThrow(new Exception());
 		Assert.assertThrows(Exception.class, ()->weatherInformationServiceForServiceTest.getAvailableCities());
@@ -200,7 +193,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call queryWeatherByCities method
 	 */
 	@Test
-	public void whenQueryWeatherRecordServiceGetDataQueryException () throws Exception{
+	public void whenQueryWeatherInformationServiceGotDataQueryExceptionFromDao () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherRecordDaoForServiceTest.queryWeatherByCities(anyList())).thenThrow(new DataQueryException());
 		Assert.assertThrows(Exception.class, ()->weatherInformationServiceForServiceTest.queryWeatherByCities(anyList()));
@@ -213,7 +206,7 @@ class SimpleWeatherInformationServiceApplicationForSystemExceptionTests {
 	 when call queryWeatherByCities method
 	 */
 	@Test
-	public void whenQueryWeatherRecordServiceGetUnknownException () throws Exception{
+	public void whenQueryWeatherInformationServiceGotUnknownExceptionFromDao () throws Exception{
 		MockedDatabase.initDatabase();
 		when(weatherRecordDaoForServiceTest.queryWeatherByCities(anyList())).thenThrow(new Exception());
 		Assert.assertThrows(Exception.class, ()->weatherInformationServiceForServiceTest.queryWeatherByCities(anyList()));
