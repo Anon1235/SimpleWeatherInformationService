@@ -120,7 +120,7 @@ public class WeatherInformationController {
         List<String> tips = new ArrayList<String>();
         tips.add("Welcome, currently following services are available");
         tips.add("1. /queryweatherbycities, support GET Method input city list (up to 3, each city should have different name) and get current weather record");
-        tips.add(" Need webservice client support and The input format like following:");
+        tips.add(" Need webservice client support and The input format like following (remove any Backslashs(\\) if see them,:");
         tips.add("   [ {\"cityname\": \"Auckland\"} , {\"cityname\": \"Wellington\"}  ]   ");
         tips.add("2. /availablecities, support GET Method, query record of which cities are available");
         //For allow clients from other IP address can receive the result
