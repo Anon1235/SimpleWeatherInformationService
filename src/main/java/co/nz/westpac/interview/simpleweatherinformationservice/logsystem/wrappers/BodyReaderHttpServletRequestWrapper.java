@@ -8,6 +8,11 @@ import java.io.IOException;
 import java.io.*;
 import java.nio.charset.Charset;
 
+/**
+ @author: matthew.yiqing.zhu
+ @date:  May 3rd 2024
+ @description: Wrap normal HttpServletRequest to  HttpServletRequestWrapper for reuse the input when needed
+ */
 public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     private final byte[] body;

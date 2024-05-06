@@ -10,7 +10,11 @@ import jakarta.servlet.http.HttpServletResponseWrapper;
 
 import java.io.*;
 import java.nio.charset.Charset;
-
+/**
+ @author: matthew.yiqing.zhu
+ @date:  May 3rd 2024
+ @description: Wrap normal HttpServletResponse to HttpServletResponseWrapper for reuse the input when needed
+ */
 public class BodyReaderHttpServletResponseWrapper extends HttpServletResponseWrapper {
 
     private ServletOutputStream outputStream;

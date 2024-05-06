@@ -14,6 +14,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+
+/**
+ @author: matthew.yiqing.zhu
+ @date:  May 3rd 2024
+ @description: WebFilter for transfer the normal ServletRequest and ServletResponse to wrapper classes for reuse
+ */
 @Component
 @WebFilter(filterName = "httpServletRequestWrapperFilter", urlPatterns = {"/*"})
 public class HttpServletRequestWrapperFilter extends HttpFilter {
